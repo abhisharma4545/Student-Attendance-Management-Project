@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Leave Status</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body style="background-color:#F0F0F0">
+
+<div th:insert="fragments/student_side_header :: header"></div>
+
+<div class="container-fluid mt-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="alert alert-info text-uppercase">
+                Leave Section / Leave Status Report
+            </div>
+
+            <div class="card border-info mb-3">
+                <div class="card-header bg-info text-white">
+                    My Leave Status Report [&nbsp;<span th:text="${#dates.format(currentDate,'dd-MM-yyyy HH:mm')}"></span>&nbsp;]
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Leave Reason</th>
+                                    <th>No of Days</th>
+                                    <th>Leave Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="leave : ${leaves}">
+                                    <td th:text="${leave.id}"></td>
+                                    <td th:text="${leave.name}"></td>
+                                    <td th:text="${leave.leaveReason}"></td>
+                                    <td th:text="${leave.noOfDays}"></td>
+                                    <td>
+                                        <span th:text="${leave.leaveStatus}"
+                                              th:classappend=" 
+                                                 ${leave.LeaveStatus=='approved'}? 'badge bg-success' : 
+                                                 (${leave.LeaveStatus=='pending'}? 'badge bg-warning text-dark' : 
+                                                 'badge bg-danger')">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body style="background-color:#F0F0F0;">
+    <div th:replace="fragments/admin_header :: header"></div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="alert alert-info shadow p-3 mb-5 text-uppercase">
+                    Students Activity / Student Notifications
+                </div>
+
+                <div class="panel shadow p-3 mb-5">
+                    <div class="panel-heading bg-light text-uppercase">
+                        <strong>
+                            Students Queries 
+                            [&nbsp;<span th:text="${#dates.format(currentDate, 'dd-MM-yyyy HH:mm:ss')}"></span>&nbsp;] 
+                            &nbsp;&nbsp;
+                            <a class="btn btn-warning" href="#">
+                                <span class="badge" th:text="${count}"></span> Pending Queries
+                            </a>
+                        </strong>
+                    </div>
+
+                    <div class="panel-body">
+                        <table id="table" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Student Id</th>
+                                    <th>Student Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Email Id</th>
+                                    <th>Notifications</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="inq : ${inquiries}">
+                                    <td th:text="${inq.id}"></td>
+                                    <td th:text="${inq.name}"></td>
+                                    <td th:text="${inq.mobile}"></td>
+                                    <td th:text="${inq.email}"></td>
+                                    <td th:text="${inq.message}"></td>
+                                    <td>
+                                        <a th:href="@{/admin/solve/{id}(id=${inq.id})}" class="btn btn-danger">
+                                            Solve Issue
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable();
+    });
+</script>
+</body>
+</html>

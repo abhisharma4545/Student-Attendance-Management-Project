@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: #F0F0F0;">
+
+    <!-- ✅ Student Header -->
+    <div th:replace="fragments/student_side_header :: header"></div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default shadow p-3 mb-5" style="height: 450px;">
+            <div class="panel-body">
+
+                <div class="alert alert-info shadow p-3 mb-5 text-uppercase">
+                    Welcome To Student Portal
+                </div>
+
+                <div class="well col-lg-12 shadow p-3 mb-5 text-center">
+                    <img th:src="@{/images/logo.png}" alt="Logo"/>
+                </div>
+
+                <!-- ✅ Attendance Stats -->
+                <div class="row text-center">
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="shadow p-3 bg-white rounded">
+                            <i class="fa fa-users fa-5x"></i>
+                            <h3><span class="text-warning" th:text="${student.studentId}">123</span></h3>
+                            <strong class="text-uppercase" style="font-size: 12px;">My Id</strong>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="shadow p-3 bg-white rounded">
+                            <i class="fa fa-users fa-5x"></i>
+                            <h3><span class="text-warning" th:text="${student.totalPresentDays}">0</span></h3>
+                            <strong class="text-uppercase" style="font-size: 12px;">Total Present Days</strong>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="shadow p-3 bg-white rounded">
+                            <i class="fa fa-users fa-5x"></i>
+                            <h3><span class="text-warning" th:text="${student.totalAbsentDays}">0</span></h3>
+                            <strong class="text-uppercase" style="font-size: 12px;">Total Absent Days</strong>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="shadow p-3 bg-white rounded">
+                            <i class="fa fa-users fa-5x"></i>
+                            <h3><span class="text-warning" th:text="${365}">0</span></h3>
+                            <strong class="text-uppercase" style="font-size: 12px;">Total Days</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Student Attendance System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+</head>
+<body style="background-color:#F0F0F0">
+
+<!-- Header fragment -->
+<div th:replace="fragments/admin_header :: header"></div>
+
+<div class="container-fluid mt-3">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="alert alert-info shadow p-3 mb-4 text-uppercase">
+                Students Activity / Student Activation & Deactivation
+            </div>
+
+            <div class="panel panel shadow p-3 mb-5">
+                <div class="panel-heading bg-light text-uppercase p-2">
+                    <strong>
+                        Students Activation & Deactivation
+                        [&nbsp;<span th:text="${#dates.format(currentDate,'dd-MM-yyyy HH:mm')}"></span>&nbsp;]
+                        <a class="btn btn-success ml-2">
+                            <span class="badge badge-light" th:text="${activeCount}"></span>
+                            Active Students
+                        </a>
+                    </strong>
+                </div>
+
+                <div class="panel-body mt-3">
+                    <table id="table" class="table table-striped table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Student Id</th>
+                            <th>Student Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student : ${students}">
+                            <td th:text="${student.studentId}"></td>
+                            <td th:text="${student.studName}"></td>
+                            <td th:text="${student.mobile}"></td>
+                            <td th:text="${student.email}"></td>
+                            <td>
+                                <span th:if="${student.status == 1}" class="badge badge-success">Active</span>
+                                <span th:if="${student.status == 0}" class="badge badge-danger">Blocked</span>
+                            </td>
+                            <td>
+                                <a th:href="@{'/manage-students/' + ${student.studentId}}">
+                                    <button th:if="${student.status == 1}"
+                                            class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to Block Account?');">
+                                        Inactive
+                                    </button>
+                                    <button th:if="${student.status == 0}"
+                                            class="btn btn-primary"
+                                            onclick="return confirm('Are you sure you want to Activate Account?');">
+                                        Active
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable();
+    });
+</script>
+
+</body>
+</html>

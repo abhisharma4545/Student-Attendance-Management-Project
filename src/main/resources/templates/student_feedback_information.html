@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance System - Feedback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css"/>
+</head>
+<body style="background-color:#F0F0F0;">
+
+<!-- ✅ Include Admin Header -->
+<div th:replace="fragments/admin_header :: header"></div>
+
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <!-- Title -->
+            <div class="alert alert-info shadow p-3 mb-5 text-uppercase">
+                Student Feedback
+            </div>
+
+            <div class="panel panel shadow p-3 mb-5">
+                <div class="panel-heading bg-light text-uppercase font-weight-bold small">
+                    Students Feedback &nbsp;
+                    [<span th:text="${#temporals.format(T(java.time.LocalDateTime).now(), 'dd-MM-yyyy HH:mm')}"></span>]
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-warning" href="#">
+                        <span class="badge" th:text="${feedbackCount}">0</span>&nbsp;Feedback
+                    </a>
+                </div>
+
+                <div class="panel-body">
+                    <table id="table" class="table table-striped table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Feedback Id</th>
+                            <th>Student Name</th>
+                            <th>Mobile No</th>
+                            <th>Students Feedback</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="feedback : ${feedbackList}">
+                            <td th:text="${feedback.id}"></td>
+                            <td th:text="${feedback.studentName}"></td>
+                            <td th:text="${feedback.mobile}"></td>
+                            <td th:text="${feedback.message}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- JS Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<!-- DataTables -->
+<script src="/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable();
+    });
+</script>
+</body>
+</html>

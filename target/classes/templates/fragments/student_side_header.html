@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Header</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- ✅ Define fragment -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" th:fragment="header">
+        <!-- Brand -->
+        <a class="navbar-brand" th:href="@{/student/dashboard}">
+            <img th:src="@{/images/logo.png}" width="200" height="50" alt="Logo"/>
+            Dashboard
+        </a>
+
+        <!-- Navbar Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/profile}">Student Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/change-password}">Change Password</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/attendance}">Attendance Report</a>
+            </li>
+
+            <!-- Inquiry Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="inquiryDropdown" data-toggle="dropdown">
+                    Inquiry/Updation
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/student/inquiry}">Student Complaint/Any Updation</a>
+                    <a class="dropdown-item" th:href="@{/student/complaint-result}">Complaint Or Issue Result</a>
+                </div>
+            </li>
+
+            <!-- Leave Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="leaveDropdown" data-toggle="dropdown">
+                    Leave Section
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/student/leave/apply}">Apply For Leave</a>
+                    <a class="dropdown-item" th:href="@{/student/leave/status}">Leave Status Report</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/feedback}">Feedback</a>
+            </li>
+
+            <!-- User Dropdown -->
+            <li class="nav-item dropdown" th:if="${session.uname != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span th:text="${session.uname}">User</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <br><br><br>
+</body>
+</html>

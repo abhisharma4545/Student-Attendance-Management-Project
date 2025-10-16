@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Student Attendance System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.css}" />
+</head>
+<body style="background-color:#F0F0F0">
+
+    <!-- Sidebar/Header Include -->
+    <div th:replace="fragments/admin_header :: header"></div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default shadow p-3 mb-5">
+            <div class="panel-body">
+
+                <!-- Alert Title -->
+                <div class="alert alert-info shadow p-3 mb-5 text-uppercase">
+                    Leave Management / Rejected Student Leave Request
+                </div>
+
+                <!-- Panel -->
+                <div class="panel panel-secondary shadow p-3 mb-5">
+                    <div class="panel-heading">
+                        Rejected Students Leave Request&nbsp;&nbsp;&nbsp;[
+                        <span th:text="${#dates.format(new java.util.Date(), 'dd-MM-yyyy HH:mm:ss')}"></span>
+                        ]&nbsp;&nbsp;
+
+                        <a class="btn btn-warning" href="#">
+                            <span class="badge">[[${rejectedCount}]]</span> Leave Rejected
+                        </a>
+                    </div>
+
+                    <div class="panel-body">
+                        <table id="table" class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Leave Id</th>
+                                    <th>Student Name</th>
+                                    <th>Leave Reasons</th>
+                                    <th>No of Days</th>
+                                    <th>Leave Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="leave : ${rejectedLeaves}">
+                                    <td th:text="${leave.id}"></td>
+                                    <td th:text="${leave.studentName}"></td>
+                                    <td><label style="color: #33b5e5;" th:text="${leave.reason}"></label></td>
+                                    <td th:text="${leave.noOfDays}"></td>
+                                    <td>
+                                        <span class="badge badge-warning" th:text="${leave.leaveStatus}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- End Panel -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+</body>
+</html>

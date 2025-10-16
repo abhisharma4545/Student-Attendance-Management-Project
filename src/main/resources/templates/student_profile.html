@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:#F0F0F0;">
+
+<!-- Include header -->
+<div th:replace="fragments/student_side_header :: header"></div>
+
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="alert alert-info shadow p-3 mb-5 text-uppercase">Student Profile</div>
+
+            <div class="panel panel-info shadow p-3 mb-5">
+                <div class="panel-heading bg-info text-white p-2">
+                    My Profile &nbsp;&nbsp;
+                    [ <span th:text="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}"></span> ]
+                </div>
+
+                <div class="panel-body p-3">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>My Profile</h4>
+                                    <hr>
+
+                                    <form>
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Register Id</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.studentId}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Full Name</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.studName}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">College Name</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.collegeName}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Mobile No</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.mobile}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Address</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.address}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Email</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.email}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">User Name</label>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control"
+                                                       th:value="${student.uname}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-4 col-form-label">Password</label>
+                                            <div class="col-8">
+                                                <input type="password" class="form-control"
+                                                       th:value="${student.password}" disabled>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div> <!-- card-body -->
+                            </div> <!-- card -->
+                        </div>
+                    </div>
+                </div> <!-- panel-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

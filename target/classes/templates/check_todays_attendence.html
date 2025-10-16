@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Today's Attendance Report</title>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body style="background-color:#F0F0F0">
+
+<div th:replace="fragments/admin_header :: header"></div>
+
+<div class="container-fluid mt-3">
+    <div class="card shadow p-3 mb-5">
+        <div class="card-body">
+            <div class="alert alert-info text-uppercase shadow p-3 mb-5">
+                Today's Attendance Report
+            </div>
+
+            <div class="card shadow p-3 mb-5">
+                <div class="card-header bg-light font-weight-bold text-uppercase small">
+                    Today's Attendance [&nbsp;<span th:text="${today}"></span>&nbsp;] &nbsp;
+                    <a class="btn btn-success">
+                        <span class="badge badge-light" th:text="${activeCount}"></span> Active Students
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Student Id</th>
+                                <th>Student Name</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Present</th>
+                                <th>Absent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="att : ${attendanceList}">
+                                <td th:text="${att.id}"></td>
+                                <td th:text="${att.name}"></td>
+                                <td th:text="${att.mobile}"></td>
+                                <td th:text="${att.email}"></td>
+                                <td>
+                                    <input type="checkbox" th:checked="${att.attendance == 'present'}" disabled>
+                                </td>
+                                <td>
+                                    <input type="checkbox" th:checked="${att.attendance == 'absent'}" disabled>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4"><strong>Today's Present & Absent Students Attendance Details</strong></td>
+                                <td><span class="badge badge-success" th:text="${presentCount} + ' Present'"></span></td>
+                                <td><span class="badge badge-danger" th:text="${absentCount} + ' Absent'"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

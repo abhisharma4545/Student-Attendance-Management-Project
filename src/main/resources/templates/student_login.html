@@ -1,0 +1,69 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Attendance System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100" 
+      style="background-image: url('/images/banner-student-home.jpg'); background-size: cover; background-position: center;">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <img src="/images/logo.png" width="200px" height="40px" alt="Logo"/>
+    <a class="navbar-brand" th:href="@{/student_login}">
+      <strong><span class="glyphicon glyphicon-user"></span>&nbsp;Student Login</strong>
+    </a>
+    <a class="navbar-brand" th:href="@{/index}">
+      <strong><span class="glyphicon glyphicon-user"></span>&nbsp;Admin Login</strong>
+    </a>
+    <div class="ml-auto text-white">
+      <strong th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm a')}"></strong>
+    </div>
+  </nav>
+
+  <!-- Login Box -->
+  <div class="container-fluid d-flex flex-grow-1">
+    <div class="row w-100 align-items-end">
+      <div class="col-12 col-md-4 ml-auto mb-3">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5>Please login to your account</h5>
+            <br>
+
+            <!-- Error Alert -->
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+            <!-- Warning Alert -->
+            <div class="alert alert-warning" th:if="${warning}" th:text="${warning}"></div>
+
+            <!-- Login Form -->
+            <form th:action="@{/student-validate}" method="post">
+              <div class="form-group">
+                <label>User Name</label>
+                <input type="text" class="form-control" name="uname" placeholder="Username" required>
+              </div>
+
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">Login</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

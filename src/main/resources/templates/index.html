@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Attendance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body style="background-image: url('/images/31.jpg'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">
+        <img src="/images/logo.png" width="200" height="40" alt="Logo">
+    </a>
+    <div class="navbar-nav">
+        <a class="nav-link" th:href="@{/student_login}"><strong>Student Login</strong></a>
+        <a class="nav-link" th:href="@{/admin_login}"><strong>Admin Login</strong></a>
+    </div>
+    
+    <div class="navbar-nav ml-auto">
+        <a class="nav-link" href="#">
+            <strong th:text="${currentTime}">Time</strong>
+        </a>
+    </div>
+</nav>
+
+<div class="container">
+    <img src="/images/logo.png" class="rounded float-right" alt="Logo" width="400" height="106">
+
+    <!-- Login Box -->
+    <div id="loginbox" th:style="${showSignup} ? 'display:none;' : 'display:block;'" style="margin-top: 50px;" class="col-md-6 col-sm-8 mx-auto">
+        <div class="card shadow p-4">
+            <h5 class="text-center">Please login to admin account</h5>
+            <br>
+
+            <!-- Alerts -->
+            <div class="alert alert-danger" th:if="${credential != null}">You have entered wrong credentials.
+                <button type="button" class="close" data-dismiss="alert">&times;</button>  
+            </div>
+            <div class="alert alert-success" th:if="${messageSuccess != null}">Account registered successfully.
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+
+            <!-- Login Form -->
+            <form th:action="@{/adminLogin}" method="post">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" name="uname" class="form-control" placeholder="User Name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">**</span>
+                        </div>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required autocomplete="current-password">
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-warning btn-lg">Login</button>
+                    <input type="reset" value="Reset" class="btn btn-danger btn-lg">
+                    <a th:href="@{/forgetPassword}" class="btn btn-link">Forget your password?</a>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small>Don’t have an account? 
+                        <a href="#" onclick="showSignupBox()">Sign Up Here</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Box -->
+    <div id="signupbox" th:style="${showSignup} ? 'display:block;' : 'display:none;'" style="margin-top: 50px;" class="col-md-6 col-sm-8 mx-auto">
+        <div class="card shadow p-4">
+            <h5 class="text-center">Sign Up</h5>
+            <form th:action="@{/admin-register}" th:object="${adminregister}" method="post">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" th:field="*{name}" class="form-control" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" th:field="*{uname}" class="form-control" placeholder="User Name" required>
+                    <div th:if="${signupError}" class="text-danger mt-1" th:text="${signupError}"></div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required autocomplete="new-password">
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" class="btn btn-info" value="Sign Up">
+                </div>
+
+                <div th:if="${signupSuccess}" class="alert alert-success mt-2" th:text="${signupSuccess}"></div>
+
+                <div class="text-center mt-3">
+                    <small>Already Registered? 
+                        <a href="#" onclick="showLoginBox()">Login Here</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    // Fade out alerts after 5 seconds
+    window.onload = function () {
+        const alerts = document.querySelectorAll('.alert');
+        if (alerts) {
+            setTimeout(() => {
+                alerts.forEach(alert => {
+                    alert.classList.remove("show");
+                    alert.classList.add("fade");
+                    setTimeout(() => alert.remove(), 500);
+                });
+            }, 5000);
+        }
+    }
+
+    // Show signup box
+    function showSignupBox() {
+        document.getElementById('loginbox').style.display = 'none';
+        document.getElementById('signupbox').style.display = 'block';
+    }
+
+    // Show login box
+    function showLoginBox() {
+        document.getElementById('signupbox').style.display = 'none';
+        document.getElementById('loginbox').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

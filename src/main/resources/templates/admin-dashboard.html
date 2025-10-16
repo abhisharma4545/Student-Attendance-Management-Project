@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+          rel="stylesheet" type="text/css"/>
+</head>
+<body style="background-color: #F0F0F0">
+
+<!-- Include header fragment -->
+<div th:replace="fragments/admin_header :: header"></div>
+
+<div class="container-fluid my-4">
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="text-uppercase mb-4">
+                <strong>Admin Management</strong>
+            </div>
+
+            <!-- Dashboard Row -->
+            <div class="row">
+                <!-- Registered Students -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-users fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${students}">0</span>
+                        </h3>
+                        <a th:href="@{/students}" class="stretched-link text-dark" target="_blank">
+                            Registered Students
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Today's Present Students -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-user fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${presentStudents}">0</span>
+                        </h3>
+                        <a th:href="@{/attendance/today}" class="stretched-link text-dark" target="_blank">
+                            Today's Present
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Today's Absent Students -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-user-slash fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${absentStudents}">0</span>
+                        </h3>
+                        <a th:href="@{/attendance/today}" class="stretched-link text-dark" target="_blank">
+                            Today's Absent
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-comments fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${feedbackCount}">0</span>
+                        </h3>
+                        <a th:href="@{/feedback}" class="stretched-link text-dark" target="_blank">
+                            Students Feedback
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Active Students -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-user-check fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${activeStudents}">0</span>
+                        </h3>
+                        <a th:href="@{/students/active}" class="stretched-link text-dark" target="_blank">
+                            Active Students
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Inactive Students -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-user-times fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${inactiveStudents}">0</span>
+                        </h3>
+                        <a th:href="@{/students/inactive}" class="stretched-link text-dark" target="_blank">
+                            Inactive Students
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Approved Leaves -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-check fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${approvedLeaves}">0</span>
+                        </h3>
+                        <a th:href="@{/leaves/approved}" class="stretched-link text-dark" target="_blank">
+                            Approved Leaves
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pending Leaves -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="shadow p-3 bg-white rounded text-center h-100">
+                        <i class="fa fa-hourglass-half fa-4x mb-2"></i>
+                        <h3 class="text-warning">
+                            <span class="counter" th:text="${pendingLeaves}">0</span>
+                        </h3>
+                        <a th:href="@{/leaves/pending}" class="stretched-link text-dark" target="_blank">
+                            Pending Leaves
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="text-uppercase mt-4">
+                <strong>Attendance System All Reports &nbsp;[&nbsp;
+                    <span th:text="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}"></span>
+                    &nbsp;]</strong>
+            </div>
+            <br>
+
+            <div class="row">
+                <!-- Attendance Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>Attendance Report</h6>
+                            <a th:href="@{/reports/attendance}" class="btn btn-primary mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>All Students Report</h6>
+                            <a th:href="@{/reports/students}" class="btn btn-info mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>Active & Inactive Report</h6>
+                            <a th:href="@{/reports/students-status}" class="btn btn-secondary mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>Student Feedback Report</h6>
+                            <a th:href="@{/reports/feedback}" class="btn btn-warning mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Leaves Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>Pending Leave Report</h6>
+                            <a th:href="@{/reports/leaves-pending}" class="btn btn-danger mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approved Leaves Report -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body text-center">
+                            <h6>Approved Leave Report</h6>
+                            <a th:href="@{/reports/leaves-approved}" class="btn btn-success mt-2">Generate Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.counterup.min.js"></script>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $('.counter').counterUp({
+            delay: 10,
+            time: 2000
+        });
+    });
+</script>
+</body>
+</html>
